@@ -36,10 +36,8 @@ async function getMatchPercentageFromGPT(currentUserTags, userTags) {
     });
 
     // Debugging: Log the raw response
-    console.log("GPT API Response:", response);
 
     const responseText = response?.choices?.[0]?.message?.content || "";
-    console.log("Response Text:", responseText);
 
     // Extract percentage using a regular expression
     const match = responseText.match(/(\d+)%/);

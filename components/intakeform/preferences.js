@@ -13,7 +13,6 @@ import {
 } from "../ui/intakeform/tooltip";
 import { Info, X } from "lucide-react";
 import { useCreateUser } from "./useCreateUser";
-import { useUsers } from "./useUsers";
 
 export default function Preferences({
   formData,
@@ -24,7 +23,7 @@ export default function Preferences({
   const [errors, setErrors] = useState({});
   const [offerInput, setOfferInput] = useState("");
   const [needInput, setNeedInput] = useState("");
-  const { createUserMutation, isCreating } = useCreateUser();
+  const { createUserMutation } = useCreateUser();
 
   const validateForm = () => {
     const newErrors = {};
@@ -78,7 +77,7 @@ export default function Preferences({
             alert("There was an error creating the user.");
           },
         });
-        console.log(newUser);
+
         onNext();
       } catch (error) {
         console.error("Error submitting form:", error);

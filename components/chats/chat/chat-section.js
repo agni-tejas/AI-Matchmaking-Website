@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, ArrowLeft, Smile, MoreVertical } from "lucide-react";
+import { Send, ArrowLeft, MoreVertical } from "lucide-react";
 import { Button } from "../../ui/chats/button";
 import { Input } from "../../ui/chats/input";
 import { ScrollArea } from "../../ui/chats/scroll-area";
@@ -43,7 +43,6 @@ async function generateAIConversation(currentUser, activeChat) {
       { role: "user", content: prompt },
     ],
   });
-  console.log("GPT API Response:", response);
 
   // Extract lines and trim whitespace
   return response.choices[0].message.content
@@ -60,12 +59,11 @@ export default function ChatSection() {
   const inputRef = useRef(null);
   const suggestionsRef = useRef(null);
   const previousActiveChatRef = useRef(null); // Reference to track the previous active chat
-  const { isLoading, users } = useUsers();
+  const { users } = useUsers();
   const [loading, setLoading] = useState(false); // New loading state
   const {
     status,
     activeChat,
-    chatHistory,
     getCurrentChat,
     sendMessage,
     backToList,
@@ -113,8 +111,6 @@ export default function ChatSection() {
 
     fetchSuggestions();
   }, [currentUser, activeChat]);
-
-  console.log(suggestions);
 
   const handleSendMessage = (e) => {
     e.preventDefault();

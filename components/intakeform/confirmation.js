@@ -23,7 +23,7 @@ export default function Confirmation({ formData }) {
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">Profile Created!</h2>
         <p className="text-muted-foreground">
-          We'll use your inputs to suggest the best connections.
+          We&apos;ll use your inputs to suggest the best connections.
         </p>
       </div>
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Input } from "../ui/homepage/input";
 import { MessageSquare, Users, Sparkles } from "lucide-react";
 
 export function QuickStart() {

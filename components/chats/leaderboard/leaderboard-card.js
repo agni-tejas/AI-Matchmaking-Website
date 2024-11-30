@@ -9,7 +9,7 @@ import {
 } from "../../ui/chats/hover-card";
 import { Badge } from "../../ui/chats/badge";
 import { MessageSquare, Star, User } from "lucide-react";
-import useChatStore, { generateAIConversation } from "../../../lib/chat-store";
+import useChatStore from "../../../lib/chat-store";
 
 export default function LeaderboardCard({ user }) {
   const { startChat, viewProfile } = useChatStore();

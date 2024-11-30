@@ -9,11 +9,10 @@ import { useUsers } from "@/components/intakeform/useUsers";
 
 export default function CurrentUserAvatar() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const { isLoading, users } = useUsers();
-  console.log(users);
+  const { users } = useUsers();
+
   const currentUser = users?.length > 0 ? users[users.length - 1] : null;
 
-  console.log(currentUser);
   const firstName = currentUser?.name;
 
   return (

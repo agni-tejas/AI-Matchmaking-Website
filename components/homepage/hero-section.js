@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useRotatingText } from "../../hooks/use-rotating-text";
-import { Button } from "../ui/homepage/button";
 import { NetworkAnimation } from "./network-animation";
 import Link from "next/link";
 
