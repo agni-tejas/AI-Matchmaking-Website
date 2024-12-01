@@ -36,9 +36,9 @@ async function getMatchPercentageFromGPT(currentUserTags, userTags) {
     });
 
     // Debugging: Log the raw response
-
     const responseText = response?.choices?.[0]?.message?.content || "";
 
+    console.log(responseText);
     // Extract percentage using a regular expression
     const match = responseText.match(/(\d+)%/);
     if (match && match[1]) {
@@ -113,12 +113,13 @@ export default function Leaderboard() {
         <div className="space-y-2 p-4">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center">
-              <div
-                className="h-5 w-5 border-2 border-gray-300 border-t-primary rounded-full animate-spin mb-2"
-                aria-label="Loading spinner"
-              ></div>
+              <div className="h-5 w-5 border-2 border-gray-300 border-t-primary rounded-full animate-spin mb-2"></div>
               <p className="text-sm text-muted-foreground">
                 Generating possible match connections...
+              </p>
+              <p className="text-sm mt-5 text-center text-muted-foreground">
+                &quot;Please wait! Sometimes it takes longer than usual, but
+                good things are worth the wait!&quot;
               </p>
             </div>
           ) : filteredUsers.length > 0 ? (
@@ -148,12 +149,13 @@ export default function Leaderboard() {
             ))
           ) : (
             <div className="flex flex-col items-center justify-center">
-              <div
-                className="h-5 w-5 border-2 border-gray-300 border-t-primary rounded-full animate-spin mb-2"
-                aria-label="Loading spinner"
-              ></div>
+              <div className="h-5 w-5 border-2 border-gray-300 border-t-primary rounded-full animate-spin mb-2"></div>
               <p className="text-sm text-muted-foreground">
                 Generating possible match connections...
+              </p>
+              <p className="text-sm mt-5 text-center text-muted-foreground">
+                &quot;Please wait! Sometimes it takes longer than usual, but
+                good things are worth the wait!&quot;
               </p>
             </div>
           )}
