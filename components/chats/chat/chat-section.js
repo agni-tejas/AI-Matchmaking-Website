@@ -18,15 +18,12 @@ import ChatList from "./chat-list";
 import useChatStore from "../../../lib/chat-store";
 import ChatSuggestions from "./chat-suggestions";
 import { format } from "date-fns";
-import { OpenAI } from "openai"; // Importing OpenAI API
 import { useUsers } from "@/components/intakeform/useUsers";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Create OpenAI instance
-const openai = new OpenAI({
-  apiKey: "pk-UWYZQDMaZrEibVVcDwoHZYTWGpVvkvZmqYHJEwShRlkBsZue",
-  baseURL: "https://api.pawan.krd/cosmosrp/v1/chat/completions",
-  dangerouslyAllowBrowser: true,
-});
+// Initialize the Gemini API client
+const genAI = new GoogleGenerativeAI("AIzaSyDClUd9xPEd76sIO_H0S5r9hPgs-lSFW8U");
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b" });
 
 // Function to generate AI conversation based on common tags
 async function generateAIConversation(currentUser, activeChat) {
@@ -34,18 +31,17 @@ async function generateAIConversation(currentUser, activeChat) {
     Current User's Tags: ${currentUser.commonTags.join(", ")}
     Other User's Tags: ${activeChat.commonTags.join(", ")}
 
-    Generate four different one-line formal conversation starters based on the common tags between the two users. Each sentence should be short and natural. Output only the sentences, one per line.
+    Generate four different formal conversation starters based on the common tags between the two users. Each sentence should be charming,brief and smart. Output only the sentences, one per line.
   `;
 
-  const response = await openai.chat.completions.create({
-    messages: [
-      { role: "system", content: "You are a helpful assistant." },
-      { role: "user", content: prompt },
-    ],
-  });
+  // Generate the content using Gemini AI
+  const response = await model.generateContent(prompt);
 
+  // Extract the text response
+  const responseText = response?.response?.text();
+  console.log(responseText);
   // Extract lines and trim whitespace
-  return response.choices[0].message.content
+  return responseText
     .split("\n")
     .map((line) => line.trim())
     .filter((line) => line); // Remove any empty lines
@@ -132,7 +128,11 @@ export default function ChatSection() {
   }
 
   if (status === "LIST") {
-    return <ChatList />;
+    return (
+      <div className="h-screen">
+        <ChatList />
+      </div>
+    );
   }
 
   const currentChat = getCurrentChat();

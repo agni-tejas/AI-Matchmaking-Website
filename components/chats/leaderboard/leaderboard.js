@@ -7,38 +7,31 @@ import { ScrollArea } from "../../ui/chats/scroll-area";
 import LeaderboardCard from "./leaderboard-card";
 import useChatStore from "../../../lib/chat-store";
 import { useUsers } from "@/components/intakeform/useUsers";
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize OpenAI with Proxy URL
-const openai = new OpenAI({
-  apiKey: "pk-UWYZQDMaZrEibVVcDwoHZYTWGpVvkvZmqYHJEwShRlkBsZue", // Replace with your API key
-  baseURL: "https://api.pawan.krd/cosmosrp/v1/chat/completions",
-  dangerouslyAllowBrowser: true, // Proxy endpoint
-});
+// Initialize the Gemini API client
+const genAI = new GoogleGenerativeAI("AIzaSyDClUd9xPEd76sIO_H0S5r9hPgs-lSFW8U");
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b" });
 
-// Function to get match percentage using GPT AI
-// Function to get match percentage using GPT AI
-async function getMatchPercentageFromGPT(currentUserTags, userTags) {
+// Function to get match percentage using Gemini AI
+async function getMatchPercentageFromGemini(currentUserTags, userTags) {
   const prompt = `
-    Compare the following two sets of tags and provide a similarity percentage (0 to 100):
+    Compare the following two sets of tags and provide a similarity percentage (0 to 100). Extract the meaning of the tags of both users and if the tags' meanings align somewhere to similarity, provide the similarity percentage:
     Current User's Tags: ${currentUserTags.join(", ")}
     Other User's Tags: ${userTags.join(", ")}
 
-    After comparison is done,provide only similarity percentage answer with "%" symbol, no words at all should be in the answer. 
+     After comparison is done,provide only similarity percentage answer with "%" symbol, no words at all should be in the answer. if two sets of tags are completely different with no similarities at all then provide 0%.
   `;
 
   try {
-    const response = await openai.chat.completions.create({
-      messages: [
-        { role: "system", content: "You are a helpful assistant." },
-        { role: "user", content: prompt },
-      ],
-    });
+    // Generate the content using Gemini AI
+    const response = await model.generateContent(prompt);
 
-    // Debugging: Log the raw response
-    const responseText = response?.choices?.[0]?.message?.content || "";
+    // Extract the text response
+    const responseText = response?.response?.text();
 
     console.log(responseText);
+
     // Extract percentage using a regular expression
     const match = responseText.match(/(\d+)%/);
     if (match && match[1]) {
@@ -48,7 +41,7 @@ async function getMatchPercentageFromGPT(currentUserTags, userTags) {
       return 0; // Default to 0 if parsing fails
     }
   } catch (error) {
-    console.error("Error fetching match percentage from GPT:", error);
+    console.error("Error fetching match percentage from Gemini:", error);
     return 0; // Default to 0 on error
   }
 }
@@ -71,7 +64,7 @@ export default function Leaderboard() {
       const usersWithUpdatedMatches = await Promise.all(
         users.map(async (user, index) => {
           if (index === users.length - 1) return user; // Skip current user
-          const matchPercentage = await getMatchPercentageFromGPT(
+          const matchPercentage = await getMatchPercentageFromGemini(
             currentUser.commonTags,
             user.commonTags
           );

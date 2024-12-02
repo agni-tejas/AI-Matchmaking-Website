@@ -132,9 +132,7 @@ export default function UserProfile({ user }) {
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Mail className="h-4 w-4 text-muted-foreground" />
-                <span>
-                  {user.name.toLowerCase().replace(" ", ".")}@example.com
-                </span>
+                <span>{user.email}</span>
               </div>
             </CardContent>
           </Card>

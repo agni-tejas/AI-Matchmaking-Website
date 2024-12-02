@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { MessageSquare, Search } from "lucide-react";
 import { ScrollArea } from "../../ui/chats/scroll-area";
 import { Avatar } from "../../ui/chats/avatar";
@@ -9,6 +10,12 @@ import useChatStore from "../../../lib/chat-store";
 
 export default function ChatList() {
   const { chatHistory, startChat } = useChatStore();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter chat history based on search term
+  const filteredChats = chatHistory.filter((chat) =>
+    chat.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (!chatHistory.length) {
     return (
@@ -28,16 +35,25 @@ export default function ChatList() {
 
   return (
     <div className="flex h-full flex-col">
+      {/* Header */}
       <div className="border-b p-4">
         <h2 className="mb-4 text-xl font-semibold">Recent Chats</h2>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input placeholder="Search chats..." className="pl-9" />
+          {/* Input for search */}
+          <Input
+            placeholder="Search chats..."
+            className="pl-9"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
       </div>
+
+      {/* Scrollable Chat List */}
       <ScrollArea className="flex-1">
         <div className="divide-y">
-          {chatHistory.map((chat) => {
+          {filteredChats.map((chat) => {
             const lastMessage = chat.messages[chat.messages.length - 1];
             const hasUnread = false; // TODO: Implement unread status
 
@@ -89,6 +105,13 @@ export default function ChatList() {
               </div>
             );
           })}
+
+          {/* No chats found */}
+          {filteredChats.length === 0 && (
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No chats found.
+            </div>
+          )}
         </div>
       </ScrollArea>
     </div>
