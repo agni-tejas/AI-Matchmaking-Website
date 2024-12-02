@@ -11,16 +11,16 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize the Gemini API client
 const genAI = new GoogleGenerativeAI("AIzaSyDClUd9xPEd76sIO_H0S5r9hPgs-lSFW8U");
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // Function to get match percentage using Gemini AI
 async function getMatchPercentageFromGemini(currentUserTags, userTags) {
   const prompt = `
-    Compare the following two sets of tags and provide a similarity percentage (0 to 100). Extract the meaning of the tags of both users and if the tags' meanings align somewhere to similarity, provide the similarity percentage:
-    Current User's Tags: ${currentUserTags.join(", ")}
-    Other User's Tags: ${userTags.join(", ")}
-
-     After comparison is done,provide only similarity percentage answer with "%" symbol, no words at all should be in the answer. if two sets of tags are completely different with no similarities at all then provide 0%.
+   Compare the following two sets of tags and calculate a similarity percentage (0 to 100) based on the semantic meanings of the tags. Evaluate how closely the meanings of tags in each set align. Consider synonyms, related concepts, contexts and broad meaning of tags.
+  Current User's Tags: ${currentUserTags.join(", ")}
+  Other User's Tags: ${userTags.join(", ")}
+  Output Instructions:
+  Provide only the similarity percentage as a number followed by the % symbol (e.g., "85%").include explanation.
   `;
 
   try {

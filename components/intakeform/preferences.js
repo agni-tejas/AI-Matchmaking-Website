@@ -50,6 +50,9 @@ export default function Preferences({
     e.preventDefault();
     if (validateForm()) {
       try {
+        const common = `${formData.canOffer.join(", ")}, ${formData.needs.join(
+          ", "
+        )}`;
         const newUser = {
           name: formData.fullName,
           email: formData.email,
@@ -61,8 +64,7 @@ export default function Preferences({
           website: formData.website,
           instagram: formData.instagram,
           linkedin: formData.linkedin,
-          offer_keywords: formData.canOffer.join(", "), // Convert array to comma-separated string
-          commonTags: formData.needs.join(", "), // Convert array to comma-separated string
+          commonTags: common, // Convert array to comma-separated string
           avatar: formData.profilePicture, // Convert array to comma-separated string
           lastActive: `${randomNumber} min`,
           isTopRanked: false,
@@ -114,14 +116,17 @@ export default function Preferences({
         {/* What You Can Offer Section */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <Label>Places you like to visit</Label>
+            <Label>Describe yourself in single words.</Label>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <Info className="h-4 w-4 text-muted-foreground" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Add Places</p>
+                  <p>
+                    eg: competitive person, fun and loving, deterministic etc..
+                    Press add whenever one description is finished.
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -134,7 +139,7 @@ export default function Preferences({
                 onKeyPress={(e) =>
                   handleKeyPress(e, "canOffer", offerInput, setOfferInput)
                 }
-                placeholder="Type and press Enter to add what you can offer"
+                placeholder="Type and press Enter to add"
                 className={errors.canOffer ? "border-red-500" : ""}
               />
               <Button
@@ -172,8 +177,7 @@ export default function Preferences({
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Label>
-              Describe yourself and things you&apos;re interested in single
-              words
+              Describe things you&apos;re interested and hobbies in single words
             </Label>
             <TooltipProvider>
               <Tooltip>
@@ -181,7 +185,10 @@ export default function Preferences({
                   <Info className="h-4 w-4 text-muted-foreground" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Press add whenever one word is finished.</p>
+                  <p>
+                    eg: Coding, Traveling, Gym, Healthy Diet, Beach etc.. Press
+                    add whenever one word is finished.
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

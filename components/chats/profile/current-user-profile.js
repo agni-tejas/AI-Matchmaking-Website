@@ -1,12 +1,7 @@
 "use client";
 
 import { Avatar } from "../../ui/chats/avatar";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "../../ui/chats/dialog";
+import { Dialog, DialogContent, DialogTitle } from "../../ui/chats/dialog";
 import { Badge } from "../../ui/chats/badge";
 import { Button } from "../../ui/chats/button";
 import { ScrollArea } from "../../ui/chats/scroll-area";
@@ -20,7 +15,6 @@ import {
   Linkedin,
   Star,
 } from "lucide-react";
-//import { currentUser } from "../../../lib/dummy-data";
 
 export default function CurrentUserProfile({ isOpen, onClose, currentUser }) {
   const timestamp = currentUser?.created_at;
@@ -45,13 +39,11 @@ export default function CurrentUserProfile({ isOpen, onClose, currentUser }) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl h-[80vh]">
-        <DialogHeader>
-          <DialogTitle className="text-center">My Profile</DialogTitle>
-        </DialogHeader>
+        <DialogTitle></DialogTitle>
         <ScrollArea className="h-full pr-4">
-          <div className="space-y-6">
+          <div className="space-y-6 ">
             <div className="text-center space-y-4">
-              <Avatar className="h-32 w-32 mx-auto border-4 border-primary/10">
+              <Avatar className="h-32 w-32  mx-auto border-4 border-violet-700">
                 <img
                   src={currentUser?.avatar}
                   alt={currentUser?.name}
@@ -74,7 +66,7 @@ export default function CurrentUserProfile({ isOpen, onClose, currentUser }) {
             </div>
 
             <div className="space-y-3">
-              <h2 className="text-lg font-semibold">Areas of Expertise</h2>
+              <h2 className="text-lg font-semibold">Areas of Interests</h2>
               <div className="flex flex-wrap gap-2">
                 {currentUser?.commonTags.map((tag) => (
                   <Badge key={tag} variant="secondary" className="px-3 py-1">
@@ -89,7 +81,7 @@ export default function CurrentUserProfile({ isOpen, onClose, currentUser }) {
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm">
                   <Briefcase className="h-4 w-4 text-muted-foreground" />
-                  <span>{currentUser?.bio}</span>
+                  <span>{currentUser?.designation}</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <MapPin className="h-4 w-4 text-muted-foreground" />

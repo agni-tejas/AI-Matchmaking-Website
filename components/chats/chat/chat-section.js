@@ -29,9 +29,9 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b" });
 async function generateAIConversation(currentUser, activeChat) {
   const prompt = `
     Current User's Tags: ${currentUser.commonTags.join(", ")}
-    Other User's Tags: ${activeChat.commonTags.join(", ")}
+Other User's Tags: ${activeChat.commonTags.join(", ")}
 
-    Generate four different formal conversation starters based on the common tags between the two users. Each sentence should be charming,brief and smart. Output only the sentences, one per line.
+Create four distinct, charming, and naturally flowing conversation starters based on the shared interests or themes represented by the common tags. Each suggestion should be approachable, engaging, and feel like it could be said casually in a friendly conversation. Output only the sentences, each on a new line, without additional context or explanations
   `;
 
   // Generate the content using Gemini AI

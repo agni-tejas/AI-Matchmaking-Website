@@ -25,7 +25,7 @@ export function QuickStart() {
   return (
     <section className="py-20 bg-muted/50">
       <div className="container px-4 mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+        <h2 className="text-5xl font-bold text-center mb-12">How It Works</h2>
 
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, index) => (

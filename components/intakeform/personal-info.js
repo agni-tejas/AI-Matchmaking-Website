@@ -196,7 +196,7 @@ export default function PersonalInfo({ formData, updateFormData, onNext }) {
             </SelectTrigger>
             <SelectContent>
               {nationalities.map((nationality) => (
-                <SelectItem key={nationality} value={nationality.toLowerCase()}>
+                <SelectItem key={nationality} value={nationality.toUpperCase()}>
                   {nationality}
                 </SelectItem>
               ))}
